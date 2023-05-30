@@ -209,7 +209,7 @@ def get_user_list():
     user_table.delete(*user_table.get_children())
 
     # Get the list of users
-    stdin, stdout, stderr = ssh.exec_command('awk -F: \'{ print $1}\' /etc/passwd')
+    stdin, stdout, stderr = ssh.exec_command('awk -F: \'($3 >= 1000) && ($1 != "nobody") { print $1 }\' /etc/passwd')
     user_list = stdout.read().decode().split('\n')
 
     for user in user_list:
